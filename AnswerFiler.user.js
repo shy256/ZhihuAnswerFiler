@@ -11,8 +11,8 @@
 
 (function() {
     'use strict';
-    const blacklist = [];
-    const isVIP = false;
+    const blacklist = [/*'example'*/]; // 如果您不想看某个人的回答，可以将此人的用户名加入此数组
+    const isVIP = false; // 如果您是盐选会员，请将此处改为true
     const filterFunc = [
         {
             name: 'author in black list',
