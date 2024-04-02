@@ -78,5 +78,5 @@
     setTimeout(() => {
         _observer.observe(targetNode, config);
         console.log("Zhihu Answer Filter v2024_4_2");
-    }, 1000);
+    }, 100);
 })();
