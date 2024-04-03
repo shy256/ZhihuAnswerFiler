@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New Userscript
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.zhihu.com/question/*
@@ -11,8 +11,9 @@
 
 (function() {
     'use strict';
-    const blacklist = [/*'example'*/]; // 如果您不想看某个人的回答，可以将此人的用户名加入此数组
-    const isVIP = false; // 如果您是盐选会员，请将此处改为true
+    console.log("Zhihu Answer Filter v2024_4_3");
+    const blacklist = [];
+    const isVIP = false;
     const filterFunc = [
         {
             name: 'author in black list',
@@ -23,6 +24,12 @@
                     return false
                 }
                 return true;
+            }
+        },
+        {
+            name: 'paid novel trial',
+            filter: function(a){            
+                return !a.querySelector('div[class="KfeCollection-PaidAnswerFooter"]') || isVIP
             }
         },
         {
@@ -53,10 +60,10 @@
     }
     const callback = () => {
         _observer.disconnect()
-        try{
-            var root = document.querySelectorAll(".List-item")
-            root.forEach(i =>{
-                if(i.getAttribute('hidden') != 1){
+        var root = document.querySelectorAll(".List-item")
+        root.forEach(i =>{
+            try{
+                if(i.getAttribute("hidden") != '1'){
                     let passed = filterMain(i);
                     let author = i.querySelector(".AuthorInfo")
                     author =author.querySelector('meta[itemprop=name]').getAttribute('content');
@@ -66,17 +73,17 @@
                         console.log(author + "'s answer is blocked. reason:" + passed[1])
                     }
                 }
-            })
-        }
-        catch(e){
-
-        }
+            }
+            catch(e){
+            }
+        })
         _observer.observe(targetNode, config);
     };
+
     const _observer = new MutationObserver(callback);
+    _observer.observe(targetNode, config);
 
     setTimeout(() => {
-        _observer.observe(targetNode, config);
-        console.log("Zhihu Answer Filter v2024_4_2");
-    }, 100);
+        callback();
+    }, 1000);
 })();
