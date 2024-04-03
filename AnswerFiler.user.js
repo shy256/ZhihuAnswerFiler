@@ -18,10 +18,10 @@
         {
             name: 'author in black list',
             filter: function(a){
-                let author = a.querySelector(".AuthorInfo")
+                let author = a.querySelector(".AuthorInfo");
                 author =author.querySelector('meta[itemprop=name]').getAttribute('content');
                 if(blacklist.indexOf(author) != -1){
-                    return false
+                    return false;
                 }
                 return true;
             }
@@ -29,20 +29,20 @@
         {
             name: 'paid novel trial',
             filter: function(a){            
-                return !a.querySelector('div[class="KfeCollection-PaidAnswerFooter"]') || isVIP
+                return !a.querySelector('div[class="KfeCollection-PaidAnswerFooter"]') || isVIP;
             }
         },
         {
             name: 'paid novel trial',
             filter: function(a){            
-                return !a.querySelector('div[class^="NavigateToAppCheckCard"]') || isVIP
+                return !a.querySelector('div[class^="NavigateToAppCheckCard"]') || isVIP;
             }
         },
         {
             name: 'paid novel trial',
             filter: function(a){     
-                let target = a.querySelector('a[data-draft-type="link-card"]')       
-                return !(target && target.href.indexOf('www.zhihu.com/market') != -1) || isVIP
+                let target = a.querySelector('a[data-draft-type="link-card"]'); 
+                return !(target && target.href.indexOf('www.zhihu.com/market') != -1) || isVIP;
             }
         },
     ]
@@ -59,18 +59,18 @@
         return Array(true, '');
     }
     const callback = () => {
-        _observer.disconnect()
-        var root = document.querySelectorAll(".List-item")
+        _observer.disconnect();
+        var root = document.querySelectorAll(".List-item");
         root.forEach(i =>{
             try{
                 if(i.getAttribute("hidden") != '1'){
                     let passed = filterMain(i);
-                    let author = i.querySelector(".AuthorInfo")
+                    let author = i.querySelector(".AuthorInfo");
                     author =author.querySelector('meta[itemprop=name]').getAttribute('content');
                     if(!passed[0]){
-                        i.setAttribute("hidden", '1')
-                        i.setAttribute("style","display:none;")
-                        console.log(author + "'s answer is blocked. reason:" + passed[1])
+                        i.setAttribute("hidden", '1');
+                        i.setAttribute("style","display:none;");
+                        console.log(author + "'s answer is blocked. reason:" + passed[1]);
                     }
                 }
             }
